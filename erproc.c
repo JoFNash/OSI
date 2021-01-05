@@ -15,7 +15,6 @@ int Socket(int domain, int type, int protocol) {
   return res; // вернули дескриптор сокета
 }
 
-/* присваивает сокету имя. sockfd - дескриптор гнезда(сокета). *addr  указывает на структуру, содержащую имя, которое должно быть присвоено гнезду. addrlen - размер этой структуры */
 void Bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
   int res = bind(sockfd, addr, addrlen);
   if (res == -1) {
@@ -24,7 +23,6 @@ void Bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
   }
 }
 
-/* sockfd - дескриптор гнезда, возвращенный функцией socket. backlog - максимальное число запросов на установление соединения */
 void Listen(int sockfd, int backlog) {
   int res = listen(sockfd, backlog);
   if (res == -1) {
@@ -33,7 +31,6 @@ void Listen(int sockfd, int backlog) {
   }
 }
 
-/* вызывается в серверном (!) процессе для установления соединения с клиентским сокетом */
 int Accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen) {
   int res = accept(sockfd, addr, addrlen);
   if (res == -1) {
@@ -43,7 +40,6 @@ int Accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen) {
   return res;
 }
 
-/* из клиентского гнезда делает запрос на установление соединения с серверным гнездом/сокетом */
 void Connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen) {
   int res = connect(sockfd, addr, addrlen);
   if (res == -1) {
