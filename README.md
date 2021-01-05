@@ -1,6 +1,6 @@
- gcc -o server_2 erproc.c server_2.c
+gcc -o server_2 erproc.c server_2.c
 
-\\ gcc -o client_2 erproc.c client_2.c  
+gcc -o client_2 erproc.c client_2.c  
 
 \\ ./server_2
 
