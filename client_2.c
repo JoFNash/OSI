@@ -5,13 +5,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 #include "erproc.h"
 #define SIZE 256
 
 
 int main(int argc, char * argv[]) {
 
-  //int SIZE  = 256;
   int i;
   FILE * input_file;
 
@@ -32,8 +32,10 @@ int main(int argc, char * argv[]) {
 
   for (int i = 1; i < argc; i++){
 
-    if (!(input_file = fopen(argv[i], "rb")))
-      perror("file error");
+    if (!(input_file = fopen(argv[i], "rb"))){
+      perror("File error");
+      exit(-1);
+    }
 
     while ((nbytes = fread(data_file, sizeof(char), sizeof(input_file), input_file)) > 0)
       {
@@ -48,18 +50,17 @@ int main(int argc, char * argv[]) {
     nread = recv(fd, buf, 5, 0);
 
     if (nread == -1) {
-      perror("read failed");
+      perror("read failed!");
       exit(EXIT_FAILURE);
     }
     if (nread == 0) {
-      printf("EOF occured\n");
+      printf("EOF occured!\n");
     }
-    //write(STDOUT_FILENO, buf, nread);
     printf("%s", buf);
+    memset(buf, 0, sizeof(buf));
     if (nread != 5)
       break;
   }
-  // shutdown(fd, 1);
   fclose(input_file);
   close(fd);
   return 0;
