@@ -41,8 +41,6 @@ int main() {
 
   while ( (nread = read(fd, buf, 256)) > 0) {
 
-    // printf("buf = %s\n", buf);
-
     if (nread == -1) {
       perror("read failed");
       exit(EXIT_FAILURE);
@@ -51,22 +49,11 @@ int main() {
       printf("END OF FILE occured\n");
     }
 
-    //if (nread != 1){
-    //strcat(bufstring, buf);
-    //strcat(string, );}
+    if (nread < 256){
+      Process_dict(buf, &tmp_file, &res);
+      memset(buf, 0, sizeof(buf));
+    }
   }
-  //    if (nread < 256)
-  printf("%s", buf);
-  Process_dict(buf, &tmp_file, &res);
-  //printf("bufstring = %s\n", bufstring);
-
-  // char_counter * res = NULL;
-  // Process_dict(buf, &tmp_file);
-
-
-  //printf("Ok\n");
-  //Process_dict(bufstring, &tmp_file, &res);
-
 
   if (!(tmp_file = fopen("tmp.txt", "r")))
     perror("File open error");
@@ -79,7 +66,6 @@ int main() {
       sent = send(fd, bufstring, nbytes, 0);
     }
 
-
   fclose(tmp_file);
   close(fd);
   close(server);
@@ -89,10 +75,6 @@ int main() {
 void Process_dict(char str[], FILE ** tmp_file, char_counter **res){
 
   int i, j;
-  //char str[];
-  //int struct_counter = 0; /* сколько букв в словаре (или количество структур)*/
-  //char_counter *res = NULL;
-  //static int struct_counter;
 
   if ((*res) == NULL)
     struct_counter = 0;
@@ -124,7 +106,6 @@ void Process_dict(char str[], FILE ** tmp_file, char_counter **res){
     for (i = 0; i < struct_counter; i++)
       {
         fprintf((*tmp_file), "%c: %d occurences\n", (*res)[i].charakter, (*res)[i].count);
-        printf("%c: %d occurences\n", (*res)[i].charakter, (*res)[i].count);
       }
   }
 
